@@ -8,10 +8,12 @@ namespace TestProject
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private SpriteFont _basicFont;
 
         Texture2D cellBombSprite;
         Texture2D cellCoveredSprite;
         Texture2D cellFlagedSprite;
+        Texture2D cellRestartSprite;
         Texture2D cellUncovered1Sprite;
         Texture2D cellUncovered2Sprite;
         Texture2D cellUncovered3Sprite;
@@ -19,23 +21,26 @@ namespace TestProject
         Texture2D cellUncovered5Sprite;
         Texture2D cellUncoveredBlankSprite;
 
-        Grid grid = new Grid(10, 10, 10);
+        Grid grid = new Grid(15, 15, 30);
 
         MouseState mState;
-        int ix = 0;
-        int jx = 0;
+        int cran = 100;
         bool mReleased = true;
+        int timer = 0;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
         }
 
         protected override void Initialize()
         {
-
+            _graphics.PreferredBackBufferWidth = grid.Width * 48;
+            _graphics.PreferredBackBufferHeight = grid.Height * 48 + cran;
+            _graphics.ApplyChanges();
             grid.PrepareBombs();
             grid.CountNeighborBombs(grid.Cells);
 
@@ -46,9 +51,12 @@ namespace TestProject
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _basicFont = Content.Load<SpriteFont>("File");
+
             cellBombSprite = Content.Load<Texture2D>("CellBomb");
             cellCoveredSprite = Content.Load<Texture2D>("CellCovered");
             cellFlagedSprite = Content.Load<Texture2D>("CellFlaged");
+            cellRestartSprite = Content.Load<Texture2D>("CellRestart");
             cellUncovered1Sprite = Content.Load<Texture2D>("CellUncovered1");
             cellUncovered2Sprite = Content.Load<Texture2D>("CellUncovered2");
             cellUncovered3Sprite = Content.Load<Texture2D>("CellUncovered3");
@@ -59,6 +67,7 @@ namespace TestProject
 
         protected override void Update(GameTime gameTime)
         {
+            timer++;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -68,19 +77,31 @@ namespace TestProject
             {
                 //bool condition = mState.Position.ToVector2()<(480.0,480.0).ToVector2() ;
                 Vector2 position = mState.Position.ToVector2();
-                int abscisse = (int) position.X/48;
-                int ordonnee = (int) position.Y/48;
-                grid.Uncover(abscisse, ordonnee);
-                //ix++;
+                int abscisse = (int)position.X / 48;
+                int ordonnee = (int)(position.Y - cran) / 48;
+                if (((grid.Width * 24 - 37) < position.X && position.X < (grid.Width * 24 + 37)) && (0 < position.Y && position.Y < cran))
+                {
+                    Reset();
+                    grid.PrepareBombs();
+                    grid.CountNeighborBombs(grid.Cells);
+                }
+                if (position.Y > cran)
+                    grid.Uncover(abscisse, ordonnee);
             }
             if (mState.RightButton == ButtonState.Pressed && mReleased)
             {
                 Vector2 position = mState.Position.ToVector2();
                 int abscisse = (int)position.X / 48;
-                int ordonnee = (int)position.Y / 48;
-                if(!grid.Cells[abscisse, ordonnee].IsRevealed)
+                int ordonnee = (int)(position.Y - cran) / 48;
+                if (!grid.Cells[abscisse, ordonnee].IsRevealed)
+                {
+                    if (!grid.Cells[abscisse, ordonnee].IsFlagged)
+                        grid.Score++;
+                    else
+                        grid.Score--;
                     grid.Cells[abscisse, ordonnee].IsFlagged = !grid.Cells[abscisse, ordonnee].IsFlagged;
-                //jx++;
+                }
+
                 mReleased = false;
             }
             if (mState.RightButton == ButtonState.Released)
@@ -91,11 +112,21 @@ namespace TestProject
             base.Update(gameTime);
         }
 
+
+        private void Reset()
+        {
+            timer = 0;
+            grid = new Grid(15, 15, 30);
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
+            _spriteBatch.DrawString(_basicFont, "Score: " + grid.Score, new Vector2(50, 30), Color.White);
+            _spriteBatch.DrawString(_basicFont, $"Time: {timer/60}", new Vector2(570, 30), Color.White);
+            _spriteBatch.Draw(cellRestartSprite, new Vector2((grid.Width * 48) / 2 - 37, 13), Color.White);
             //_spriteBatch.Draw(cellCoveredSprite, new Vector2(0, 0), Color.White);
             //_spriteBatch.Draw(cellBombSprite, new Vector2(ix, jx * 48), Color.White);
             for (int i = 0; i < grid.Width; i++)
@@ -105,28 +136,21 @@ namespace TestProject
                     Texture2D valeur;
                     if (!grid.Cells[i, j].IsFlagged)
                     {
-                        //valeur = cellCoveredSprite;
-                        //if(grid.Cells[i, j].Neighbors<10)
-                        valeur = Content.Load<Texture2D>(grid.Cells[i, j].Value);
+                        if (grid.Cells[i, j].Neighbors > 10)
+                            valeur = Content.Load<Texture2D>("CellUncoveredBlank");
+                        else
+                            valeur = Content.Load<Texture2D>(grid.Cells[i, j].Value);
                     }
-                        
+
                     else
                         valeur = cellFlagedSprite;
 
-                    _spriteBatch.Draw(valeur, new Vector2(i*48, j*48), Color.White);
+                    _spriteBatch.Draw(valeur, new Vector2(i * 48, cran + j * 48), Color.White);
                 }
-                
-               
+
+
             }
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(48, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(96, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(96+48, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(96+96, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(192+48, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(192+96, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(192+144, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(192+192, 0), Color.White);
-            //_spriteBatch.Draw(cellCoveredSprite, new Vector2(432, 0), Color.White);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);

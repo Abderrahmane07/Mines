@@ -6,9 +6,10 @@ namespace TestProject
 {
     public class Grid
     {
-        public int Width { get; set; }
+        public int Width { get; set; }       
         public int Height { get; set; }
         public int Bombs { get; set; }
+        public int Score { get; set; }
         public Cell[,] Cells { get; set; }
 
         public Grid(int width, int height, int bombs)
@@ -16,6 +17,7 @@ namespace TestProject
             Width = width;
             Height = height;
             Bombs = bombs;
+            Score = 0;
             Cells = new Cell[Width, Height];
 
             for (int i = 0; i < Width; i++)
@@ -74,27 +76,27 @@ namespace TestProject
             }
         }
 
-        //public void Cascade(int i, int j)
-        //{
+        public void Cascade(int i, int j)
+        {
 
-        //    if ((i > 0 && j > 0) && Cells[i - 1, j - 1].Neighbors == 0)
-        //        Uncover(i - 1, j - 1);
-        //    if (j > 0 && Cells[i, j - 1].Neighbors == 0)
-        //        Uncover(i, j - 1);
-        //    if ((i < Width - 1 && j > 0) && Cells[i + 1, j - 1].Neighbors == 0)
-        //        Uncover(i + 1, j - 1);
-        //    if (i > 0 && Cells[i - 1, j].Neighbors == 0)
-        //        Uncover(i - 1, j);
-        //    if (i < Width - 1 && Cells[i + 1, j].Neighbors == 0)
-        //        Uncover(i + 1, j);
-        //    if ((i > 0 && j < Height - 1) && Cells[i - 1, j + 1].Neighbors == 0)
-        //        Uncover(i - 1, j + 1);
-        //    if (j < Height - 1 && Cells[i, j + 1].Neighbors == 0)
-        //        Uncover(i, j + 1);
-        //    if ((i < Width - 1 && j < Height - 1) && Cells[i + 1, j + 1].Neighbors == 0)
-        //        Uncover(i + 1, j + 1);
+            if ((i > 0 && j > 0) && !Cells[i - 1, j - 1].IsRevealed)
+                Uncover(i - 1, j - 1);
+            if (j > 0 && !Cells[i, j - 1].IsRevealed)
+                Uncover(i, j - 1);
+            if ((i < Width - 1 && j > 0) && Cells[i + 1, j - 1].IsRevealed)
+                Uncover(i + 1, j - 1);
+            if (i > 0 && !Cells[i - 1, j].IsRevealed)
+                Uncover(i - 1, j);
+            if (i < Width - 1 && !Cells[i + 1, j].IsRevealed)
+                Uncover(i + 1, j);
+            if ((i > 0 && j < Height - 1) && !Cells[i - 1, j + 1].IsRevealed)
+                Uncover(i - 1, j + 1);
+            if (j < Height - 1 && !Cells[i, j + 1].IsRevealed)
+                Uncover(i, j + 1);
+            if ((i < Width - 1 && j < Height - 1) && !Cells[i + 1, j + 1].IsRevealed)
+                Uncover(i + 1, j + 1);
 
-        //}
+        }
 
 
         public void Uncover(int i, int j)
@@ -105,7 +107,13 @@ namespace TestProject
                 if (!Cells[i, j].IsBomb)
                 {
                     if (Cells[i, j].Neighbors == 0)
+                    {
                         Cells[i, j].Value = "CellUncoveredBlank";
+                        Cells[i, j].Neighbors = 100;
+                        Cascade(i, j);
+
+                    }
+
                     else
                         Cells[i, j].Value = "CellUncovered" + Cells[i, j].Neighbors.ToString();
                     //Cells[i, j].Neighbors = 100;
@@ -114,10 +122,7 @@ namespace TestProject
                 else
                     Cells[i, j].Value = "CellBomb";
             }
-            //Cascade(i, j);
-
-            //DrawCells();
-
+            
         }
 
 

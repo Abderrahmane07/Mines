@@ -7,12 +7,14 @@
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellBomb.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellCovered.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellFlaged.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellRestart.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered1.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered2.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered3.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered4.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered5.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncoveredBlank.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/File.spritefont</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
@@ -24,5 +26,7 @@
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>basicFont.spritefont</File>
   </DestFiles>
 </SourceFileCollection>

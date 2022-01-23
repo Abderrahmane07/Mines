@@ -31,3 +31,6 @@ C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3
 C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\CellUncovered5.xnb
 C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\CellUncoveredBlank.xnb
 C:\Users\Abderrahmane\source\repos\TestProject\TestProject\obj\Debug\netcoreapp3.1\TestProject.csproj.AssemblyReference.cache
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\CellRestart.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\basicFont.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\File.xnb
