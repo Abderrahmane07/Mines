@@ -11,6 +11,7 @@ namespace TestProject
         public int Bombs { get; set; }
         public int Score { get; set; }
         public Cell[,] Cells { get; set; }
+        public State GameState { get; set; }
 
         public Grid(int width, int height, int bombs)
         {
@@ -18,6 +19,7 @@ namespace TestProject
             Height = height;
             Bombs = bombs;
             Score = 0;
+            GameState = State.gameReady;
             Cells = new Cell[Width, Height];
 
             for (int i = 0; i < Width; i++)
@@ -103,6 +105,7 @@ namespace TestProject
         {
             if (!Cells[i, j].IsFlagged)
             {
+                GameState = State.gamePlayed;
                 Cells[i, j].IsRevealed = true;
                 if (!Cells[i, j].IsBomb)
                 {
@@ -120,9 +123,20 @@ namespace TestProject
                 }
 
                 else
+                {
                     Cells[i, j].Value = "CellBomb";
+                    GameState = State.gameFailed;
+                }
             }
             
+        }
+
+        public enum State
+        {
+            gameReady,
+            gamePlayed,
+            gameFailed, 
+            gameSuccesful
         }
 
 

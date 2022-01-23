@@ -43,6 +43,7 @@ namespace TestProject
             _graphics.ApplyChanges();
             grid.PrepareBombs();
             grid.CountNeighborBombs(grid.Cells);
+            grid.GameState = Grid.State.gameReady;
 
             base.Initialize();
         }
@@ -67,7 +68,8 @@ namespace TestProject
 
         protected override void Update(GameTime gameTime)
         {
-            timer++;
+            if(grid.GameState==Grid.State.gamePlayed)
+                timer++;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -75,7 +77,7 @@ namespace TestProject
 
             if (mState.LeftButton == ButtonState.Pressed)
             {
-                //bool condition = mState.Position.ToVector2()<(480.0,480.0).ToVector2() ;
+                
                 Vector2 position = mState.Position.ToVector2();
                 int abscisse = (int)position.X / 48;
                 int ordonnee = (int)(position.Y - cran) / 48;
@@ -85,10 +87,10 @@ namespace TestProject
                     grid.PrepareBombs();
                     grid.CountNeighborBombs(grid.Cells);
                 }
-                if (position.Y > cran)
+                if (position.Y > cran && (grid.GameState == Grid.State.gamePlayed || grid.GameState == Grid.State.gameReady))
                     grid.Uncover(abscisse, ordonnee);
             }
-            if (mState.RightButton == ButtonState.Pressed && mReleased)
+            if (mState.RightButton == ButtonState.Pressed && mReleased && (grid.GameState == Grid.State.gamePlayed || grid.GameState == Grid.State.gameReady))
             {
                 Vector2 position = mState.Position.ToVector2();
                 int abscisse = (int)position.X / 48;
@@ -101,7 +103,8 @@ namespace TestProject
                         grid.Score--;
                     grid.Cells[abscisse, ordonnee].IsFlagged = !grid.Cells[abscisse, ordonnee].IsFlagged;
                 }
-
+                if (grid.Score == grid.Bombs)
+                    grid.GameState = Grid.State.gameSuccesful;
                 mReleased = false;
             }
             if (mState.RightButton == ButtonState.Released)
@@ -117,6 +120,7 @@ namespace TestProject
         {
             timer = 0;
             grid = new Grid(15, 15, 30);
+            grid.GameState = Grid.State.gameReady;
         }
 
         protected override void Draw(GameTime gameTime)
@@ -149,6 +153,10 @@ namespace TestProject
                 }
 
 
+            }
+            if (grid.GameState == Grid.State.gameSuccesful)
+            {
+                _spriteBatch.DrawString(_basicFont, $"You won! Your record is: {timer / 60}", new Vector2(300, 350), Color.White);
             }
 
             _spriteBatch.End();
