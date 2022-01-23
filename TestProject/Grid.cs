@@ -23,8 +23,8 @@ namespace TestProject
                 for (int j = 0; j < Height; j++)
                 {
                     Cells[i, j] = new Cell();
-                    Cells[i, j].X = j + 1;
-                    Cells[i, j].Y = i + 1;
+                    Cells[i, j].X = 24 + 48 * i;
+                    Cells[i, j].Y = 24 + 48 * j;
                 }
             }
         }
@@ -40,6 +40,7 @@ namespace TestProject
                 if (Cells[x, y].IsBomb == false)
                 {
                     Cells[x, y].IsBomb = true;
+                    //Cells[x, y].Neighbors = 50;
                     compteur++;
                 }
 
@@ -73,17 +74,50 @@ namespace TestProject
             }
         }
 
+        //public void Cascade(int i, int j)
+        //{
 
-        public void Uncover()
+        //    if ((i > 0 && j > 0) && Cells[i - 1, j - 1].Neighbors == 0)
+        //        Uncover(i - 1, j - 1);
+        //    if (j > 0 && Cells[i, j - 1].Neighbors == 0)
+        //        Uncover(i, j - 1);
+        //    if ((i < Width - 1 && j > 0) && Cells[i + 1, j - 1].Neighbors == 0)
+        //        Uncover(i + 1, j - 1);
+        //    if (i > 0 && Cells[i - 1, j].Neighbors == 0)
+        //        Uncover(i - 1, j);
+        //    if (i < Width - 1 && Cells[i + 1, j].Neighbors == 0)
+        //        Uncover(i + 1, j);
+        //    if ((i > 0 && j < Height - 1) && Cells[i - 1, j + 1].Neighbors == 0)
+        //        Uncover(i - 1, j + 1);
+        //    if (j < Height - 1 && Cells[i, j + 1].Neighbors == 0)
+        //        Uncover(i, j + 1);
+        //    if ((i < Width - 1 && j < Height - 1) && Cells[i + 1, j + 1].Neighbors == 0)
+        //        Uncover(i + 1, j + 1);
+
+        //}
+
+
+        public void Uncover(int i, int j)
         {
-            int i = Int32.Parse(Console.ReadLine());
-            int j = Int32.Parse(Console.ReadLine());
-            if (!Cells[i, j].IsBomb)
-                Cells[i, j].Value = Cells[i, j].Neighbors.ToString() + " ";
-            else
-                Cells[i, j].Value = "* ";
-            DrawCells();
-            Uncover();
+            if (!Cells[i, j].IsFlagged)
+            {
+                Cells[i, j].IsRevealed = true;
+                if (!Cells[i, j].IsBomb)
+                {
+                    if (Cells[i, j].Neighbors == 0)
+                        Cells[i, j].Value = "CellUncoveredBlank";
+                    else
+                        Cells[i, j].Value = "CellUncovered" + Cells[i, j].Neighbors.ToString();
+                    //Cells[i, j].Neighbors = 100;
+                }
+
+                else
+                    Cells[i, j].Value = "CellBomb";
+            }
+            //Cascade(i, j);
+
+            //DrawCells();
+
         }
 
 

@@ -8,6 +8,7 @@ namespace TestProject
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public int Dim { get; set; }
         public bool IsBomb { get; set; }
         public bool IsFlagged { get; set; }
         public bool IsRevealed { get; set; }
@@ -16,11 +17,12 @@ namespace TestProject
 
         public Cell()
         {
+            Dim = 48;
             IsBomb = false;
             IsFlagged = false;
             IsRevealed = false;
             Neighbors = 0;
-            Value = "X ";
+            Value = "CellCovered";
         }
     }
 }
