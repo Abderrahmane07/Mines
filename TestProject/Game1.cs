@@ -21,6 +21,10 @@ namespace TestProject
         Texture2D cellUncovered5Sprite;
         Texture2D cellUncoveredBlankSprite;
 
+        //public Grid _grid = new Grid(15, 15, 30);
+
+
+
         Grid grid = new Grid(15, 15, 30);
 
         MouseState mState;
@@ -68,16 +72,16 @@ namespace TestProject
 
         protected override void Update(GameTime gameTime)
         {
-            if(grid.GameState==Grid.State.gamePlayed)
+            if (grid.GameState == Grid.State.gamePlayed)
                 timer++;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
 
             mState = Mouse.GetState();
 
             if (mState.LeftButton == ButtonState.Pressed)
             {
-                
+
                 Vector2 position = mState.Position.ToVector2();
                 int abscisse = (int)position.X / 48;
                 int ordonnee = (int)(position.Y - cran) / 48;
@@ -88,7 +92,22 @@ namespace TestProject
                     grid.CountNeighborBombs(grid.Cells);
                 }
                 if (position.Y > cran && (grid.GameState == Grid.State.gamePlayed || grid.GameState == Grid.State.gameReady))
+                {
+                    if (!grid.HasStarted)
+                    {
+                        if (grid.Cells[abscisse, ordonnee].IsBomb)
+                        {
+                            Reset();
+                            grid.PrepareBombs();
+                            grid.CountNeighborBombs(grid.Cells);
+                            //grid.Uncover(abscisse, ordonnee);
+                            
+                        }
+                    }
                     grid.Uncover(abscisse, ordonnee);
+                    grid.HasStarted = true;
+                }
+                
             }
             if (mState.RightButton == ButtonState.Pressed && mReleased && (grid.GameState == Grid.State.gamePlayed || grid.GameState == Grid.State.gameReady))
             {
@@ -116,12 +135,18 @@ namespace TestProject
         }
 
 
-        private void Reset()
+        public void Reset()
         {
             timer = 0;
             grid = new Grid(15, 15, 30);
             grid.GameState = Grid.State.gameReady;
         }
+
+        //public void SevenSegmentDigit(int number)
+        //{
+        //    Texture2D chiffre;
+
+        //}
 
         protected override void Draw(GameTime gameTime)
         {
@@ -129,7 +154,7 @@ namespace TestProject
 
             _spriteBatch.Begin();
             _spriteBatch.DrawString(_basicFont, "Score: " + grid.Score, new Vector2(50, 30), Color.White);
-            _spriteBatch.DrawString(_basicFont, $"Time: {timer/60}", new Vector2(570, 30), Color.White);
+            _spriteBatch.DrawString(_basicFont, $"Time: {timer / 60}", new Vector2(570, 30), Color.White);
             _spriteBatch.Draw(cellRestartSprite, new Vector2((grid.Width * 48) / 2 - 37, 13), Color.White);
             //_spriteBatch.Draw(cellCoveredSprite, new Vector2(0, 0), Color.White);
             //_spriteBatch.Draw(cellBombSprite, new Vector2(ix, jx * 48), Color.White);

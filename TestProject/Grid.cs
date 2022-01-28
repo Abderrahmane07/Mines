@@ -6,12 +6,13 @@ namespace TestProject
 {
     public class Grid
     {
-        public int Width { get; set; }       
+        public int Width { get; set; }
         public int Height { get; set; }
         public int Bombs { get; set; }
         public int Score { get; set; }
         public Cell[,] Cells { get; set; }
         public State GameState { get; set; }
+        public bool HasStarted { get; set; }
 
         public Grid(int width, int height, int bombs)
         {
@@ -20,6 +21,7 @@ namespace TestProject
             Bombs = bombs;
             Score = 0;
             GameState = State.gameReady;
+            HasStarted = false;
             Cells = new Cell[Width, Height];
 
             for (int i = 0; i < Width; i++)
@@ -85,7 +87,7 @@ namespace TestProject
                 Uncover(i - 1, j - 1);
             if (j > 0 && !Cells[i, j - 1].IsRevealed)
                 Uncover(i, j - 1);
-            if ((i < Width - 1 && j > 0) && Cells[i + 1, j - 1].IsRevealed)
+            if ((i < Width - 1 && j > 0) && !Cells[i + 1, j - 1].IsRevealed)
                 Uncover(i + 1, j - 1);
             if (i > 0 && !Cells[i - 1, j].IsRevealed)
                 Uncover(i - 1, j);
@@ -103,8 +105,19 @@ namespace TestProject
 
         public void Uncover(int i, int j)
         {
+
             if (!Cells[i, j].IsFlagged)
             {
+                //if(GameState == State.gameReady)
+                //{
+                //    if (Cells[i, j].IsBomb)
+                //    {
+                //        Game1.Reset();
+                //        PrepareBombs();
+                //        CountNeighborBombs(Cells);
+                //        Uncover(i, j);
+                //    }
+                //}
                 GameState = State.gamePlayed;
                 Cells[i, j].IsRevealed = true;
                 if (!Cells[i, j].IsBomb)
@@ -128,14 +141,14 @@ namespace TestProject
                     GameState = State.gameFailed;
                 }
             }
-            
+
         }
 
         public enum State
         {
             gameReady,
             gamePlayed,
-            gameFailed, 
+            gameFailed,
             gameSuccesful
         }
 

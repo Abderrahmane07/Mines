@@ -2,8 +2,8 @@
 <PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <SourceFile>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/File.spritefont</SourceFile>
   <SourceTime>2020-08-10T18:17:28+02:00</SourceTime>
-  <DestFile>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/bin/DesktopGL/basicFont.xnb</DestFile>
-  <DestTime>2022-01-23T15:20:39.4805137+01:00</DestTime>
+  <DestFile>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/bin/DesktopGL/File.xnb</DestFile>
+  <DestTime>2022-01-28T22:34:56.5893381+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2020-08-10T18:17:54+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

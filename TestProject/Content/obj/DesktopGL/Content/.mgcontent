@@ -4,6 +4,16 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/0.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/1.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/2.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/3.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/4.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/5.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/6.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/7.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/8.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/9.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellBomb.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellCovered.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellFlaged.png</File>
@@ -13,10 +23,22 @@
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered3.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered4.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered5.png</File>
+    <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncovered6.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/CellUncoveredBlank.png</File>
     <File>C:/Users/Abderrahmane/source/repos/TestProject/TestProject/Content/File.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
