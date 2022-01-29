@@ -31,6 +31,7 @@ namespace TestProject
         int cran = 100;
         bool mReleased = true;
         int timer = 0;
+        int scoreToDisplay = 0;
 
         public Game1()
         {
@@ -101,13 +102,13 @@ namespace TestProject
                             grid.PrepareBombs();
                             grid.CountNeighborBombs(grid.Cells);
                             //grid.Uncover(abscisse, ordonnee);
-                            
+
                         }
                     }
                     grid.Uncover(abscisse, ordonnee);
                     grid.HasStarted = true;
                 }
-                
+
             }
             if (mState.RightButton == ButtonState.Pressed && mReleased && (grid.GameState == Grid.State.gamePlayed || grid.GameState == Grid.State.gameReady))
             {
@@ -117,12 +118,24 @@ namespace TestProject
                 if (!grid.Cells[abscisse, ordonnee].IsRevealed)
                 {
                     if (!grid.Cells[abscisse, ordonnee].IsFlagged)
-                        grid.Score++;
+                    {
+                        scoreToDisplay++;
+                        if(grid.Cells[abscisse, ordonnee].IsBomb)
+                        {
+                            grid.Score++;
+                        }
+                    }
                     else
-                        grid.Score--;
+                    {
+                        if (grid.Cells[abscisse, ordonnee].IsBomb)
+                        {
+                            grid.Score--;
+                        }
+                        scoreToDisplay--;
+                    }                       
                     grid.Cells[abscisse, ordonnee].IsFlagged = !grid.Cells[abscisse, ordonnee].IsFlagged;
                 }
-                if (grid.Score == grid.Bombs)
+                if (grid.Score == grid.Bombs && scoreToDisplay == grid.Score)
                     grid.GameState = Grid.State.gameSuccesful;
                 mReleased = false;
             }
@@ -138,23 +151,52 @@ namespace TestProject
         public void Reset()
         {
             timer = 0;
+            scoreToDisplay = 0;
             grid = new Grid(15, 15, 30);
             grid.GameState = Grid.State.gameReady;
         }
 
-        //public void SevenSegmentDigit(int number)
-        //{
-        //    Texture2D chiffre;
-
-        //}
+        public void SevenSegmentDigit(int number, int x, int y)
+        {
+            Texture2D chiffreHundreds;
+            Texture2D chiffreDozens;
+            Texture2D chiffreUnits;
+            if (number < 1000)
+            {
+                chiffreHundreds = Content.Load<Texture2D>((number / 100).ToString());
+                _spriteBatch.Draw(chiffreHundreds, new Vector2(x, y), Color.White);
+            }
+            else
+            {
+                chiffreHundreds = Content.Load<Texture2D>("9");
+                _spriteBatch.Draw(chiffreHundreds, new Vector2(x, y), Color.White);
+            }
+            
+            if (number > -1)
+            {
+                chiffreDozens = Content.Load<Texture2D>(((number / 10) % 10).ToString());
+                _spriteBatch.Draw(chiffreDozens, new Vector2(x + 43, y), Color.White);
+                chiffreUnits = Content.Load<Texture2D>((number % 10).ToString());
+                _spriteBatch.Draw(chiffreUnits, new Vector2(x + 86, y), Color.White);
+            }
+            else
+            {
+                chiffreDozens = Content.Load<Texture2D>("0");
+                _spriteBatch.Draw(chiffreDozens, new Vector2(x + 43, y), Color.White);
+                chiffreUnits = Content.Load<Texture2D>("0");
+                _spriteBatch.Draw(chiffreUnits, new Vector2(x + 86, y), Color.White);
+            }
+        }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _spriteBatch.DrawString(_basicFont, "Score: " + grid.Score, new Vector2(50, 30), Color.White);
-            _spriteBatch.DrawString(_basicFont, $"Time: {timer / 60}", new Vector2(570, 30), Color.White);
+            //_spriteBatch.DrawString(_basicFont, "Score: " + grid.Score, new Vector2(50, 30), Color.White);
+            SevenSegmentDigit(grid.Bombs-scoreToDisplay, 90, 13);
+            SevenSegmentDigit(timer / 60, 500, 13);
+            //_spriteBatch.DrawString(_basicFont, $"Time: {timer / 60}", new Vector2(570, 30), Color.White);
             _spriteBatch.Draw(cellRestartSprite, new Vector2((grid.Width * 48) / 2 - 37, 13), Color.White);
             //_spriteBatch.Draw(cellCoveredSprite, new Vector2(0, 0), Color.White);
             //_spriteBatch.Draw(cellBombSprite, new Vector2(ix, jx * 48), Color.White);
@@ -179,7 +221,7 @@ namespace TestProject
 
 
             }
-            if (grid.GameState == Grid.State.gameSuccesful)
+            if (grid.GameState == Grid.State.gameSuccesful && scoreToDisplay==grid.Score)
             {
                 _spriteBatch.DrawString(_basicFont, $"You won! Your record is: {timer / 60}", new Vector2(300, 350), Color.White);
             }

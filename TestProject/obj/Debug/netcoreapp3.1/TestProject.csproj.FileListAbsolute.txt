@@ -34,3 +34,14 @@ C:\Users\Abderrahmane\source\repos\TestProject\TestProject\obj\Debug\netcoreapp3
 C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\CellRestart.xnb
 C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\basicFont.xnb
 C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\File.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\0.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\1.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\2.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\3.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\4.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\5.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\6.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\7.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\8.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\9.xnb
+C:\Users\Abderrahmane\source\repos\TestProject\TestProject\bin\Debug\netcoreapp3.1\Content\CellUncovered6.xnb
